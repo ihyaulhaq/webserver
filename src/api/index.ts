@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 
 export async function handleReadiness(
-  req: Request,
+  _: Request,
   res: Response,
 ): Promise<void> {
   res
     .set({
       "Content-Type": "text/plain",
     })
-    .send("200 OK");
+    .status(200)
+    .send("OK");
 }

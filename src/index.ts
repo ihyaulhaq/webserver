@@ -1,11 +1,13 @@
 import express from "express";
-import { handleReadiness } from "./healtz/index.js";
+import { handleReadiness } from "./api/index.js";
 
 const PORT = 8080;
 const app = express();
 
-app.use(express.static("/app"));
-app.use(express.static("assets"));
+app.use("/app", express.static("./src/app"));
+
+app.use(express.static("./assets"));
+
 app.get("/healthz", handleReadiness);
 
 app.listen(PORT, () => {
