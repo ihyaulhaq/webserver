@@ -36,6 +36,7 @@ export async function handleMetricsReset(req: Request, res: Response) {
 
 export async function handleValidate(req: Request, res: Response) {
   const chirp = req.body;
+  const badWords = ["kerfuffle", "sharbert", "fornax"];
 
   if (typeof chirp.body !== "string") {
     return res.status(400).json({
@@ -49,7 +50,16 @@ export async function handleValidate(req: Request, res: Response) {
     });
   }
 
+  const chirpBody = chirp.body.toLowerCase().split(" ");
+
+  for (const i in chirpBody) {
+    if (badWords.includes(chirpBody[i])) {
+      console.log(i);
+      chirpBody[i] = "****";
+    }
+  }
+
   return res.status(200).json({
-    valid: true,
+    cleanedBody: chirpBody.join(" "),
   });
 }
